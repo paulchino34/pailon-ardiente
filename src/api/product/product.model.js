@@ -14,7 +14,7 @@ const schema = mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ["Dildos", "Anillos", "Lenceria", "Plugs"]
+            required: true
         },
         price: {
             type: Number,
