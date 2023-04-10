@@ -1,13 +1,14 @@
 import Router from 'express'
-import {getProducts, getProductsByCategory, getProductById, getCategories, createProduct, updateProduct, deleteProduct} from './product.handler.js'
 import auth from '../../middleware/auth.js'
+import {getProducts, getProductsByFilter, getProductById, getCategories, 
+    createProduct, updateProduct, deleteProduct} from './product.handler.js'
 
 const productRoutes = Router()
 
 
 productRoutes.get("", auth, getProducts)
 
-productRoutes.get("/category/:category", auth, getProductsByCategory)
+productRoutes.get("/filter", auth, getProductsByFilter)
 
 productRoutes.get("/categories", auth, getCategories)
 

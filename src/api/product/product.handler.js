@@ -26,10 +26,10 @@ const getProducts = async (req, res) => {
     }
 }
 
-const getProductsByCategory = async (req, res) => {
+const getProductsByFilter = async (req, res) => {
     try {
-        const { category } = req.params
-        const products = await Product.find({ category }).select("-features")
+        const filter = req.query
+        const products = await Product.find(filter).select("-features")
         return res.json({
             ok: true,
             msg: "Productos obtenidos",
@@ -74,10 +74,14 @@ const getCategories = async (req, res) => {
 }
 
 const createProduct = async (req, res) => {
-    const { name, description, category, price, code, features, images } = req.body
+    const { name, smartDescription, description, vendor,
+        category, subCategory, price, code,
+        stock, images, features, size } = req.body
     try {
         const product = await Product.create({
-            name, description, category, price, code, features, images
+            name, smartDescription, description, vendor,
+            category, subCategory, price, code,
+            stock, images, features, size
         })
         return res.json({
             ok: true,
@@ -92,10 +96,17 @@ const createProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    const { name, description, category, price, code, features, images } = req.body
+    const { name, smartDescription, description, vendor,
+        category, subCategory, price, code,
+        stock, images, features, size } = req.body
     const { id } = req.params
     try {
-        await Product.findByIdAndUpdate(id, { name, description, category, price, code, features, images })
+        await Product.findByIdAndUpdate(id,
+            {
+                name, smartDescription, description, vendor,
+                category, subCategory, price, code,
+                stock, images, features, size
+            })
         const product = await Product.findById(id)
         return res.json({
             ok: true,
@@ -124,4 +135,4 @@ const deleteProduct = async (req, res) => {
     }
 }
 
-export { getProducts, getProductsByCategory, getProductById, getCategories, createProduct, updateProduct, deleteProduct }
+export { getProducts, getProductsByFilter, getProductById, getCategories, createProduct, updateProduct, deleteProduct }

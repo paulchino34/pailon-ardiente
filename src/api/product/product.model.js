@@ -8,13 +8,25 @@ const schema = mongoose.Schema(
             type: String,
             required: true
         },
+        smartDescription: {
+            type: String,
+            required: false
+        },
         description: {
+            type: String,
+            required: false
+        },
+        vendor: {
             type: String,
             required: true
         },
         category: {
             type: String,
             required: true
+        },
+        subCategory: {
+            type: String,
+            required: false
         },
         price: {
             type: Number,
@@ -25,28 +37,28 @@ const schema = mongoose.Schema(
             unique: true,
             required: true
         },
-        images:[
+        stock: {
+            type: Map,
+            of: Number
+        },
+        images: [
             {
                 url: {
                     type: String
+                },
+                order: {
+                    type: Number,
+                    required: false
                 }
             }
         ],
         features: {
-            materials: {
-                type: [String]
-            },
-            dimensions: {
-                length: {
-                    type: Number,
-                },
-                insertable_length: {
-                    type: Number,
-                },
-                thickness: {
-                    type: Number,
-                }
-            }
+            type: [String],
+            required: true
+        },
+        care: {
+            type: [String],
+            required: false
         }
     },
     {
