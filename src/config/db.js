@@ -5,7 +5,7 @@ dotenv.config()
 const db = async () => {
     try {
         mongoose.set('strictQuery', true)
-        await mongoose.connect(
+        mongoose.connect(
             process.env.MONGODB_URI, 
             {
                 useNewUrlParser: true,

@@ -2,6 +2,7 @@ import Router from 'express'
 import auth from '../../middleware/auth.js'
 import {getProducts, getProductsByFilter, getProductById, getCategories, 
     createProduct, updateProduct, deleteProduct} from './product.handler.js'
+import roleAuth from '../../middleware/roleAuth.js'
 
 const productRoutes = Router()
 
@@ -14,10 +15,10 @@ productRoutes.get("/categories", auth, getCategories)
 
 productRoutes.get("/:id", auth, getProductById)
 
-productRoutes.post("", auth, createProduct)
+productRoutes.post("", auth, roleAuth(['admin']), createProduct)
 
-productRoutes.put("/:id", auth, updateProduct)
+productRoutes.put("/:id", auth, roleAuth(['admin']), updateProduct)
 
-productRoutes.delete("/:id", auth, deleteProduct)
+productRoutes.delete("/:id", auth, roleAuth(['admin']), deleteProduct)
 
 export default productRoutes

@@ -37,6 +37,10 @@ const schema = mongoose.Schema(
         },
         zipCode: {
             type: String
+        },
+        role: {
+            type: String,
+            enum: ['client', 'admin']
         }
     },
     {

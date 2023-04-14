@@ -36,13 +36,12 @@ const createUser = async (req, res) => {
     const { name, lastname, email, phone, password } = req.body
     const salt = await bcryptjs.genSalt(10)
     const hashedPassword = await bcryptjs.hash(password, salt)
+    const emails = process.env.ADMIN_USERS.split(',')
     try {
         const user = await User.create({
-            name,
-            lastname,
-            email,
-            password: hashedPassword,
-            phone
+            name, lastname, email,
+            password: hashedPassword, phone,
+            role: emails.includes(email) ? 'admin' : 'client'
         })
 
         const payload = {

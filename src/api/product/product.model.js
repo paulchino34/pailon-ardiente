@@ -24,8 +24,8 @@ const schema = mongoose.Schema(
             type: String,
             required: true
         },
-        subCategory: {
-            type: String,
+        subCategories: {
+            type: [String],
             required: false
         },
         price: {
@@ -37,28 +37,37 @@ const schema = mongoose.Schema(
             unique: true,
             required: true
         },
-        stock: {
-            type: Map,
-            of: Number
-        },
+        stock: [
+            {
+                sizeNumber: {
+                    type: Number
+                },
+                sizeLetters: {
+                    type: String
+                },
+                color: {
+                    type: String
+                },
+                quantity: {
+                    type: Number
+                },
+            }
+        ],
         images: [
             {
                 url: {
                     type: String
                 },
                 order: {
-                    type: Number,
-                    required: false
+                    type: Number
                 }
             }
         ],
         features: {
-            type: [String],
-            required: true
+            type: String
         },
         care: {
-            type: [String],
-            required: false
+            type: String
         }
     },
     {

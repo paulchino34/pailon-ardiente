@@ -75,13 +75,13 @@ const getCategories = async (req, res) => {
 
 const createProduct = async (req, res) => {
     const { name, smartDescription, description, vendor,
-        category, subCategory, price, code,
-        stock, images, features, size } = req.body
+        category, subCategories, price, code,
+        stock, images, features, care } = req.body
     try {
         const product = await Product.create({
             name, smartDescription, description, vendor,
-            category, subCategory, price, code,
-            stock, images, features, size
+            category, subCategories, price, code,
+            stock, images, features, care
         })
         return res.json({
             ok: true,
@@ -97,15 +97,15 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const { name, smartDescription, description, vendor,
-        category, subCategory, price, code,
-        stock, images, features, size } = req.body
+        category, subCategories, price, code,
+        stock, images, features, care } = req.body
     const { id } = req.params
     try {
         await Product.findByIdAndUpdate(id,
             {
                 name, smartDescription, description, vendor,
-                category, subCategory, price, code,
-                stock, images, features, size
+                category, subCategories, price, code,
+                stock, images, features, care
             })
         const product = await Product.findById(id)
         return res.json({

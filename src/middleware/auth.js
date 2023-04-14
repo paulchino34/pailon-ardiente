@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     try {
         const verifiedToken = jwt.verify(token, process.env.SECRET)
         let remainingTimeTokenInSeconds = (new Date(verifiedToken.exp * 1000) - Date.now()) / 1000
-        if (remainingTimeTokenInSeconds <= process.env.TOKEN_TIME_RENEW) {
+        if (verifiedToken && remainingTimeTokenInSeconds <= process.env.TOKEN_TIME_RENEW) {
             const payload = { user: { id: verifiedToken.user.id } }
             jwt.sign(
                 payload,
