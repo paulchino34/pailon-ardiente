@@ -1,30 +1,6 @@
+import productBodies from '../../backup-data/products.js'
 import Product from './product.model.js'
-import { fetchProductById } from './product.service.js';
-
-const getProducts = async (req, res) => {
-    try {
-        const products = await Product.find({}).select("-features")
-
-        const mapProducts = new Map();
-        products.forEach((product) => {
-            const category = product.category
-            if (mapProducts.has(category)) {
-                mapProducts.get(category).push(product)
-            } else {
-                mapProducts.set(category, [product])
-            }
-        })
-        return res.json({
-            ok: true,
-            msg: "Productos obtenidos",
-            data: Object.fromEntries(mapProducts)
-        })
-    } catch (error) {
-        return res.status(500).json({
-            msg: error.message
-        })
-    }
-}
+import { fetchProductById } from './product.service.js'
 
 const getProductsByFilter = async (req, res) => {
     try {
@@ -36,6 +12,24 @@ const getProductsByFilter = async (req, res) => {
             data: products
         })
     } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg: error.message
+        })
+    }
+}
+
+const getProductsBySubCategories = async (req, res) => {
+    try {
+        const { subCategories } = req.query
+        const products = await Product.find({ subCategories: { $in: subCategories.split(',') } })
+        return res.json({
+            ok: true,
+            msg: "Productos obtenidos",
+            data: products
+        })
+    } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: error.message
         })
@@ -52,6 +46,7 @@ const getProductById = async (req, res) => {
             data: product
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: error.message
         })
@@ -67,6 +62,7 @@ const getCategories = async (req, res) => {
             data: categories
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: error.message
         })
@@ -89,6 +85,7 @@ const createProduct = async (req, res) => {
             data: product
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: error.message
         })
@@ -114,6 +111,7 @@ const updateProduct = async (req, res) => {
             data: product
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: error.message
         })
@@ -129,10 +127,29 @@ const deleteProduct = async (req, res) => {
             msg: "Producto eliminado"
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             msg: error.message
         })
     }
 }
 
-export { getProducts, getProductsByFilter, getProductById, getCategories, createProduct, updateProduct, deleteProduct }
+const loadProducts = async (req, res) => {
+    try {
+        Product.insertMany(productBodies)
+        return res.status(200).json({
+            msg: 'Productos creados exitosamente',
+            totalProducts: productBodies.length
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg: error.message
+        })
+    }
+}
+
+export {
+    getProductsByFilter, getProductsBySubCategories, getProductById,
+    getCategories, createProduct, updateProduct, deleteProduct, loadProducts
+}

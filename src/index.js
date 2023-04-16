@@ -7,6 +7,7 @@ import userRoutes from './api/user/index.js'
 import productRoutes from './api/product/index.js'
 import orderRoutes from './api/order/index.js'
 import cartRoutes from './api/cart/index.js'
+import configurationRoutes from './api/configuration/index.js'
 
 
 await db()
@@ -20,6 +21,7 @@ userRoutes(app)
 productRoutes(app)
 orderRoutes(app)
 cartRoutes(app)
+configurationRoutes(app)
 
 app.get('/', (req, res) => res.send('Proyecto up'))
 
