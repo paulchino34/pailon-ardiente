@@ -2,7 +2,7 @@
  Backend de la aplicacion para la tienda de adultos
 
 # Datos importantes
-Este es el quito proyecto que se realizó para el Ucamp de Full stack con MERN
+Este es el quinto proyecto que se realizó para el Ucamp de Full stack con MERN
 
 Pagina donde fue deployado el proyecto:
 
